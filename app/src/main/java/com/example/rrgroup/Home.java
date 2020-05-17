@@ -48,6 +48,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
     RecyclerView recycler_menu;
     RecyclerView.LayoutManager layoutManager;
+    FirebaseRecyclerAdapter<Category, MenuViewHolder> adapter;
 
     private AppBarConfiguration mAppBarConfiguration;
 
@@ -113,20 +114,26 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>().setQuery(category,Category.class).build();
 
-        FirebaseRecyclerAdapter  adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
            //<Category, MenuViewHolder>
             //Category.class,R.layout.menu_item,MenuViewHolder.class,category
 
             @Override
             protected void onBindViewHolder(@NonNull MenuViewHolder viewHolder, int position, @NonNull Category model) {
                 viewHolder.txtMenuName.setText(model.getName());
-                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
+                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView); //changed from imageViee
 
-                final Category clickItem= model;
+                final Category productList = model;
                 viewHolder.setItemClickListener(new ItemClickListener() {
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Toast.makeText(Home.this, ""+clickItem.getName(), Toast.LENGTH_SHORT).show();
+                        //get category and sent to activity
+
+                        Intent productList = new Intent(Home.this,ProductList.class);
+                        //CategoryiD is key
+                        productList.putExtra("CategoryID",adapter.getRef(position).getKey());
+                        startActivity(productList);
+
                     }
                 });
 
