@@ -97,14 +97,22 @@ public class ProductList extends AppCompatActivity {
                         .load(model.getImage())
                         .into(viewHolder.product_image);
 
+                final Products local = model;
+
                 viewHolder.setItemClickListener(new ItemClickListener() {
+
+
+
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                        Intent foodDetailIntent = new Intent(ProductList.this, Products.class);
+                       /* Intent foodDetailIntent = new Intent(ProductList.this, Products.class);
                         foodDetailIntent.putExtra("MenuID", adapter.getRef(position).getKey());
-                        startActivity(foodDetailIntent);
+                        startActivity(foodDetailIntent);*/
+                       Toast.makeText(ProductList.this,""+local.getName(),Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
             }
 
 
@@ -152,7 +160,7 @@ public class ProductList extends AppCompatActivity {
             }*/
 
         //};
-        
+
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //set adapter
         adapter.startListening();
