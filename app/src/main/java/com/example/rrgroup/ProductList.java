@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
@@ -79,15 +80,37 @@ public class ProductList extends AppCompatActivity {
 
         adapter = new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
 
-           /* @Override
+
             public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
                 View itemView = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.product_item, parent, false);
 
                 return new ProductViewHolder(itemView);
-            }*/
+            }
 
-            protected void populateViewHolder(ProductViewHolder viewHolder,Products model, int position){
+            ///////////////
+            @Override
+            protected void onBindViewHolder(@NonNull final ProductViewHolder viewHolder, @SuppressLint("RecyclerView") final int position, @NonNull final Products model) {
+                viewHolder.product_name.setText(model.getName());
+                // viewHolder.food_price.setText(String.format("$ %s", model.getPrice()));
+                Picasso.with(getBaseContext())
+                        .load(model.getImage())
+                        .into(viewHolder.product_image);
+
+                viewHolder.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position, boolean isLongClick) {
+                        Intent foodDetailIntent = new Intent(ProductList.this, Products.class);
+                        foodDetailIntent.putExtra("MenuID", adapter.getRef(position).getKey());
+                        startActivity(foodDetailIntent);
+                    }
+                });
+            }
+
+
+            /////////////////
+
+          /*  protected void populateViewHolder(ProductViewHolder viewHolder,Products model, int position){
 
             viewHolder.product_name.setText(model.getName());
             Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.product_image);
@@ -119,16 +142,18 @@ public class ProductList extends AppCompatActivity {
                     }
                 });*/
 
-            }
+        };
 
-            @NonNull
+          /*  @NonNull
             @Override
             public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
                 return new ProductViewHolder(view);
-            }
+            }*/
 
-        };
+        //};
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //set adapter
         adapter.startListening();
         adapter.notifyDataSetChanged();
