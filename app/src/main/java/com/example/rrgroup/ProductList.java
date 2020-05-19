@@ -102,66 +102,22 @@ public class ProductList extends AppCompatActivity {
                 viewHolder.setItemClickListener(new ItemClickListener() {
 
 
-
                     @Override
                     public void onClick(View view, int position, boolean isLongClick) {
-                       /* Intent foodDetailIntent = new Intent(ProductList.this, Products.class);
-                        foodDetailIntent.putExtra("MenuID", adapter.getRef(position).getKey());
-                        startActivity(foodDetailIntent);*/
-                       Toast.makeText(ProductList.this,""+local.getName(),Toast.LENGTH_SHORT).show();
+
+                        //Start new activity
+                        Intent productDetail = new Intent(ProductList.this, ProductDetail.class);
+                        productDetail.putExtra("ProductID", adapter.getRef(position).getKey());
+                        startActivity(productDetail);
+
+
                     }
                 });
 
 
             }
 
-
-            /////////////////
-
-          /*  protected void populateViewHolder(ProductViewHolder viewHolder,Products model, int position){
-
-            viewHolder.product_name.setText(model.getName());
-            Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.product_image);
-
-            final Products local = model;
-            viewHolder.setItemClickListener(new ItemClickListener() {
-                @Override
-                public void onClick(View view, int position, boolean isLongClick) {
-                   Toast.makeText(ProductList.this,""+local.getName(),Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull Products model) {
-
-               /* ProductViewHolder.product_Name.setText(model.getName());
-                Picasso.with().load(model.getImage()).into(ProductViewHolder.product_image);
-
-                ProductViewHolder.setItemClickListener(new ItemClickListener() {
-                    @Override
-                    public void onClick(View view, int position, boolean isLongClick) {
-                        // Start activity of food details
-                        Intent foodDetails = new Intent(ProductList.this, FoodDetails.class);
-                        foodDetails.putExtra("FoodId", adapter.getRef(position).getKey()); //send FoodId to new Activity
-                        startActivity(foodDetails);
-                    }
-                });*/
-
         };
-
-          /*  @NonNull
-            @Override
-            public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
-                return new ProductViewHolder(view);
-            }*/
-
-        //};
-
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //set adapter
         adapter.startListening();
         adapter.notifyDataSetChanged();
