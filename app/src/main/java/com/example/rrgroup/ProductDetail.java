@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -19,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import Database.Database;
+import Model.Order;
 import Model.Products;
 
 public class ProductDetail extends AppCompatActivity {
@@ -35,7 +39,7 @@ public class ProductDetail extends AppCompatActivity {
     FirebaseDatabase database;
     DatabaseReference products;
 
-
+    Products currentProduct;
 
 
     @Override
@@ -51,6 +55,25 @@ public class ProductDetail extends AppCompatActivity {
         //Init view
         numberButton = (ElegantNumberButton)findViewById(R.id.number_button);
         btnCart = (FloatingActionButton)findViewById(R.id.btnCart);
+
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Database(getBaseContext()).addToCart(new Order(
+                        productId,
+                        currentProduct.getName(),
+                        numberButton.getNumber(),
+                        currentProduct.getPrice(),
+                        currentProduct.getDiscount()
+
+
+
+                ));
+
+                Toast.makeText(ProductDetail.this, "Added To Cart", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         product_description = (TextView)findViewById(R.id.product_description);
         product_name = (TextView)findViewById(R.id.product_name);
@@ -77,18 +100,18 @@ public class ProductDetail extends AppCompatActivity {
         products.child(productId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Products product = dataSnapshot.getValue(Products.class);
+                currentProduct = dataSnapshot.getValue(Products.class);
 
                 //Set Image
-                Picasso.with(getBaseContext()).load(product.getImage()).into(product_image);
+                Picasso.with(getBaseContext()).load(currentProduct.getImage()).into(product_image);
 
-                collapsingToolbarLayout.setTitle(product.getName());
+                collapsingToolbarLayout.setTitle(currentProduct.getName());
 
-                product_price.setText(product.getPrice());
+                product_price.setText(currentProduct.getPrice());
 
-                product_name.setText(product.getName());
+                product_name.setText(currentProduct.getName());
 
-                product_description.setText(product.getDescription());
+                product_description.setText(currentProduct.getDescription());
 
 
 
