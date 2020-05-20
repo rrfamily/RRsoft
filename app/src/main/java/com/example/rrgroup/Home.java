@@ -1,43 +1,43 @@
 package com.example.rrgroup;
 
-import android.content.ClipData;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Menu;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.content.ClipData;
+        import android.content.Intent;
+        import android.os.Bundle;
+        import android.view.LayoutInflater;
+        import android.view.MenuItem;
+        import android.view.View;
+        import android.view.Menu;
+        import android.view.ViewGroup;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+        import com.firebase.ui.database.FirebaseRecyclerAdapter;
+        import com.firebase.ui.database.FirebaseRecyclerOptions;
+        import com.google.android.material.floatingactionbutton.FloatingActionButton;
+        import com.google.android.material.snackbar.Snackbar;
+        import com.google.android.material.navigation.NavigationView;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+        import com.squareup.picasso.Picasso;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.annotation.NonNull;
+        import androidx.appcompat.app.ActionBarDrawerToggle;
+        import androidx.navigation.NavController;
+        import androidx.navigation.Navigation;
+        import androidx.navigation.ui.AppBarConfiguration;
+        import androidx.navigation.ui.NavigationUI;
+        import androidx.drawerlayout.widget.DrawerLayout;
+        import androidx.appcompat.app.AppCompatActivity;
+        import androidx.appcompat.widget.Toolbar;
+        import androidx.recyclerview.widget.LinearLayoutManager;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
+        import org.w3c.dom.Text;
 
-import Common.Common;
-import Interface.ItemClickListener;
-import MenuViewHolder.MenuViewHolder;
-import Model.Category;
+        import Common.Common;
+        import Interface.ItemClickListener;
+        import MenuViewHolder.MenuViewHolder;
+        import Model.Category;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -72,8 +72,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 //add to cart
                /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-               Intent cartIntent = new Intent (Home.this,Cart.class);
-               startActivity(cartIntent);
+                Intent cartIntent = new Intent (Home.this,Cart.class);
+                startActivity(cartIntent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -117,7 +117,7 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         FirebaseRecyclerOptions<Category> options = new FirebaseRecyclerOptions.Builder<Category>().setQuery(category,Category.class).build();
 
         adapter = new FirebaseRecyclerAdapter<Category, MenuViewHolder>(options) {
-           //<Category, MenuViewHolder>
+            //<Category, MenuViewHolder>
             //Category.class,R.layout.menu_item,MenuViewHolder.class,category
 
             @Override
@@ -178,23 +178,25 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
 
         //hadle Navigation view item clicks here.
 
+
         int id = item.getItemId();
 
         if (id == R.id.nav_menu) {
-            Intent menuIntent = new Intent(Home.this, Home.class);
-            startActivity(menuIntent);
+            // Intent menuIntent = new Intent(Home.this, Home.class);
+            //startActivity(menuIntent);
 
-        } else if (id == R.id.nav_cart) {
-            Intent menuIntent = new Intent(Home.this, Home.class);
-            startActivity(menuIntent);
+        } else if (id == R.id.nav_order) {
+            Intent orderIntent = new Intent(Home.this, OrderStatus.class);
+            startActivity(orderIntent);
+        }
+        else if (id == R.id.nav_cart) {
+            Intent cartIntent = new Intent(Home.this, Cart.class);
+            startActivity(cartIntent);
         } else if (id == R.id.nav_logout) {
 
-            //Paper.book().destroy();
-
-            Intent mainActivity = new Intent(Home.this, MainActivity.class);
-            mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(mainActivity);
-
+            Intent signIn = new Intent(Home.this,MainActivity.class);
+            signIn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(signIn);
         }
         //DrawerLayout drawer = findViewById(R.id.drawer_Layout);
         //drawer.closeDrawer(GravityCompat.START);
