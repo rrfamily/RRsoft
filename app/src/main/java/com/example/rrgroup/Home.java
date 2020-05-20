@@ -22,6 +22,7 @@ package com.example.rrgroup;
 
         import androidx.annotation.NonNull;
         import androidx.appcompat.app.ActionBarDrawerToggle;
+        import androidx.core.view.GravityCompat;
         import androidx.navigation.NavController;
         import androidx.navigation.Navigation;
         import androidx.navigation.ui.AppBarConfiguration;
@@ -70,20 +71,13 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
             @Override
             public void onClick(View view) {
                 //add to cart
-               /* Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
                 Intent cartIntent = new Intent (Home.this,Cart.class);
                 startActivity(cartIntent);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-       /* ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer,toolbar,"Open Navigation Drawer","Close Navigation Drawer");
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-         navigationView.setNavigationItemSelectedListener(this);
-        */
+        navigationView.setNavigationItemSelectedListener(this);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -172,6 +166,27 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 || super.onSupportNavigateUp();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onBackPressed(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START);
+
+        }else{
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -188,17 +203,17 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         } else if (id == R.id.nav_order) {
             Intent orderIntent = new Intent(Home.this, OrderStatus.class);
             startActivity(orderIntent);
-        }
-        else if (id == R.id.nav_cart) {
+        } else if (id == R.id.nav_cart) {
             Intent cartIntent = new Intent(Home.this, Cart.class);
             startActivity(cartIntent);
         } else if (id == R.id.nav_logout) {
 
-            Intent signIn = new Intent(Home.this,MainActivity.class);
-            signIn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            Intent signIn = new Intent(Home.this, MainActivity.class);
+            signIn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(signIn);
         }
-        //DrawerLayout drawer = findViewById(R.id.drawer_Layout);
+
+        //DrawerLayout drawer = findViewById(R.id.drawer_layout);
         //drawer.closeDrawer(GravityCompat.START);
         return true;
     }
