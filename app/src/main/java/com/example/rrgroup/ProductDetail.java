@@ -87,7 +87,7 @@ public class ProductDetail extends AppCompatActivity {
 
         //Get Product ID from intent
         if(getIntent() != null)
-            productId = getIntent().getStringExtra("ProductID");
+            productId = getIntent().getStringExtra("productID");
         if(!productId.isEmpty()){
 
             getDetailProduct(productId);

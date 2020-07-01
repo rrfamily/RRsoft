@@ -39,6 +39,7 @@ package com.example.rrgroup;
         import Interface.ItemClickListener;
         import MenuViewHolder.MenuViewHolder;
         import Model.Category;
+        import Service.ListenOrder;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -103,6 +104,11 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         recycler_menu.setLayoutManager(layoutManager);
 
         loadMenu();
+
+
+        //Register Service
+        Intent service = new Intent(Home.this, ListenOrder.class);
+        startService(service);
 
     }
 

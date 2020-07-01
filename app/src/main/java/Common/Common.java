@@ -12,7 +12,7 @@ public class Common {
                 case "0":
                     return "Placed";
                 case "1":
-                    return "On Shipping";
+                    return "Shipping";
                 default:
                     return "Shipped";
             }

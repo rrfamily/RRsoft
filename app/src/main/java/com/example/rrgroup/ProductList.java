@@ -191,7 +191,7 @@ public class ProductList extends AppCompatActivity {
 
     private void loadSuggest() {
 
-        productList.orderByChild("MenuID").equalTo(categoryID).addValueEventListener(new ValueEventListener() {
+        productList.orderByChild("menuID").equalTo(categoryID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -212,7 +212,7 @@ public class ProductList extends AppCompatActivity {
 
     private void loadListProduct(String categoryID) {
 
-        Query searchByName = productList.orderByChild("MenuID").equalTo(categoryID);
+        Query searchByName = productList.orderByChild("menuID").equalTo(categoryID);
 
         FirebaseRecyclerOptions<Products> options = new FirebaseRecyclerOptions.Builder<Products>().setQuery(searchByName,Products.class).build();
 
@@ -245,7 +245,7 @@ public class ProductList extends AppCompatActivity {
 
                         //Start new activity
                         Intent productDetail = new Intent(ProductList.this, ProductDetail.class);
-                        productDetail.putExtra("ProductID", adapter.getRef(position).getKey());
+                        productDetail.putExtra("productID", adapter.getRef(position).getKey());
                         startActivity(productDetail);
 
 
